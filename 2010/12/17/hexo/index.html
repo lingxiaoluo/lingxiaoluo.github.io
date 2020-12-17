@@ -29,8 +29,8 @@
         <hr>
     </div>
     <div class="post-content">
-        <h3 id="使用hexo和github搭建个人博客"><a href="#使用hexo和github搭建个人博客" class="headerlink" title="使用hexo和github搭建个人博客"></a>使用hexo和github搭建个人博客</h3><h5 id="1-什么是hexo"><a href="#1-什么是hexo" class="headerlink" title="1.什么是hexo"></a>1.什么是hexo</h5><p><img src="http://p4whgz4tw.bkt.clouddn.com//flex/hexo-cli.png" alt="hexo架构图"><br><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
-<h5 id="2-hexo好处都有啥，谁说对了就给他"><a href="#2-hexo好处都有啥，谁说对了就给他" class="headerlink" title="2.hexo好处都有啥，谁说对了就给他"></a>2.hexo好处都有啥，谁说对了就给他</h5><ul>
+        <h4 id="1-什么是hexo"><a href="#1-什么是hexo" class="headerlink" title="1.什么是hexo"></a>1.什么是hexo</h4><p><img src="http://p4whgz4tw.bkt.clouddn.com//flex/hexo-cli.png" alt="hexo架构图"><br><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<h4 id="2-hexo好处都有啥，谁说对了就给他"><a href="#2-hexo好处都有啥，谁说对了就给他" class="headerlink" title="2.hexo好处都有啥，谁说对了就给他"></a>2.hexo好处都有啥，谁说对了就给他</h4><ul>
 <li>快速、简洁、强大。 hexo静态博客框架，相比于WordPress，静态页面渲染速度快。上手简单快捷。</li>
 <li> 使用markdown语法。markdown语法写起来舒服，看起来更舒服。</li>
 <li> 基于node.js来渲染页面，插件系统很强大，中文支持度高。</li>
@@ -41,17 +41,17 @@
 </ul>
 </li>
 </ul>
-<h5 id="3-准备工作"><a href="#3-准备工作" class="headerlink" title="3.准备工作"></a>3.准备工作</h5><ul>
+<h4 id="3-准备工作"><a href="#3-准备工作" class="headerlink" title="3.准备工作"></a>3.准备工作</h4><ul>
 <li>github账号</li>
 <li>本地安装node和git</li>
 <li>如果有自己的域名的话，请先准备好解析（本条可有可无）</li>
 </ul>
-<h5 id="4-基本思路"><a href="#4-基本思路" class="headerlink" title="4.基本思路"></a>4.基本思路</h5><ul>
+<h4 id="4-基本思路"><a href="#4-基本思路" class="headerlink" title="4.基本思路"></a>4.基本思路</h4><ul>
 <li>本地将 *.md 渲染成静态文件</li>
 <li>然后Git推送到服务器的repository</li>
 <li>服务器再通过 git-hooks 同步网站根目录。</li>
 </ul>
-<h5 id="5-远程git仓库配置"><a href="#5-远程git仓库配置" class="headerlink" title="5.远程git仓库配置"></a>5.远程git仓库配置</h5><ul>
+<h4 id="5-远程git仓库配置"><a href="#5-远程git仓库配置" class="headerlink" title="5.远程git仓库配置"></a>5.远程git仓库配置</h4><ul>
 <li>登录你的GitHub，点击New Repository，如图所示：<img src="http://p4whgz4tw.bkt.clouddn.com/%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93.png" alt="新建仓库"></li>
 </ul>
 <br />
@@ -61,7 +61,7 @@
 <ul>
 <li>设置完成，这是完成之后的地址<img src="http://p4whgz4tw.bkt.clouddn.com/dizhi.png" alt="dizhi"></li>
 </ul>
-<h5 id="6-本地的配置"><a href="#6-本地的配置" class="headerlink" title="6.本地的配置"></a>6.本地的配置</h5><h6 id="6-1-安装git和node客户端"><a href="#6-1-安装git和node客户端" class="headerlink" title="6.1.安装git和node客户端"></a>6.1.安装git和node客户端</h6><h6 id="6-2-配置SSH。"><a href="#6-2-配置SSH。" class="headerlink" title="6.2. 配置SSH。"></a>6.2. 配置SSH。</h6><ul>
+<h4 id="6-本地的配置"><a href="#6-本地的配置" class="headerlink" title="6.本地的配置"></a>6.本地的配置</h4><h5 id="6-1-安装git和node客户端"><a href="#6-1-安装git和node客户端" class="headerlink" title="6.1.安装git和node客户端"></a>6.1.安装git和node客户端</h5><h5 id="6-2-配置SSH。"><a href="#6-2-配置SSH。" class="headerlink" title="6.2. 配置SSH。"></a>6.2. 配置SSH。</h5><ul>
 <li>打开 Git Bash（win下以管理员身份运行） ，执行下面的命令生成 SSH 访问私钥及公钥。在这里可能会出现GitHub账号与gitlab账号冲突的地方。具体修改可以参考这篇文章：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002994742">gitlab/github 多账户下设置 ssh keys</a></li>
 <li> 先生成gitlab的秘钥，一路默认即可，输入密码时密码是你的gitlab密码： <code>$ ssh-keygen -t rsa -C &quot;公司邮箱&quot;</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/ssh-lab.png" alt="生成秘钥"></li>
 <li> 查看 .ssh目录下已经生成了两个文件：<code>id_rsa</code>和<code>id_rsa_pub</code>， 查看公钥内容：<code>cat ~/.ssh/id_rsa.pub</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/lab_pub.png" alt="公钥内容"></li>
@@ -71,7 +71,7 @@
 <li> 配置config文件，通过设置别名，可以设置任意多的账户。<code>vim ~/.ssh/config</code>,进行如下配置：<img src="http://p4whgz4tw.bkt.clouddn.com/config.png" alt="config"></li>
 <li> 检测是否成功：<code>ssh -T git@github.com</code>，结果如图所示：<img src="http://p4whgz4tw.bkt.clouddn.com/github_success.png" alt="测试链接"></li>
 </ul>
-<h6 id="6-3-安装hexo框架"><a href="#6-3-安装hexo框架" class="headerlink" title="6.3 安装hexo框架"></a>6.3 安装hexo框架</h6><ul>
+<h5 id="6-3-安装hexo框架"><a href="#6-3-安装hexo框架" class="headerlink" title="6.3 安装hexo框架"></a>6.3 安装hexo框架</h5><ul>
 <li> 桌面新建一个blog文件夹，进入blog，执行：<code>npm install -g hexo-cli</code>。 <img src="http://p4whgz4tw.bkt.clouddn.com/hexo-install.png" alt="安装操作"></li>
 <li> 安装完成之后，执行初始化操作<code>hexo init &lt;文件夹名称&gt;</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/hexo-init.png" alt="init"></li>
 <li> 进入初始化后的文件夹，执行<code>npm install</code>，<img src="http://p4whgz4tw.bkt.clouddn.com/install_hexo.png" alt="install"></li>
@@ -97,7 +97,7 @@
 </ul>
 </li>
 </ul>
-<h5 id="7-部署到Github-Pages"><a href="#7-部署到Github-Pages" class="headerlink" title="7.部署到Github Pages"></a>7.部署到Github Pages</h5><ul>
+<h4 id="7-部署到Github-Pages"><a href="#7-部署到Github-Pages" class="headerlink" title="7.部署到Github Pages"></a>7.部署到Github Pages</h4><ul>
 <li>打开主目录的config.yml，设置其中的deploy 参数，详细请查看<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/deployment.html">Hexo官方文档中</a>。<img src="http://p4whgz4tw.bkt.clouddn.com/hexo-git.png" alt="url"></li>
 <li>执行安装<code>npm install hexo-deployer-git --save</code>插件，只有安装了这个插件，才能部署到github上。</li>
 <li>开始写一篇文章部署到远程仓库：<ul>
@@ -108,7 +108,7 @@
 </ul>
 </li>
 </ul>
-<h5 id="8-完成博客搭建"><a href="#8-完成博客搭建" class="headerlink" title="8.完成博客搭建"></a>8.完成博客搭建</h5><br />
+<h4 id="8-完成博客搭建"><a href="#8-完成博客搭建" class="headerlink" title="8.完成博客搭建"></a>8.完成博客搭建</h4><br />
 > 直接访问我们最初配置的github仓库地址就可以访问了：https://lingxiaoluo.github.io/
 
 <p>博客配套措施：</p>
