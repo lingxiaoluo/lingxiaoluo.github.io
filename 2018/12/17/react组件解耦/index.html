@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        学习笔记
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            react组件解耦
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h3 id="react组件解耦"><a href="#react组件解耦" class="headerlink" title="react组件解耦"></a>react组件解耦</h3><h4 id="1-什么是解耦，为什么要解耦"><a href="#1-什么是解耦，为什么要解耦" class="headerlink" title="1.什么是解耦，为什么要解耦"></a>1.什么是解耦，为什么要解耦</h4><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20278169">https://www.zhihu.com/question/20278169</a></p>
+<ul>
+<li>组件会随着时间推移而不断扩展，承担太多的任务，组件逻辑严重耦合。</li>
+<li>组件太大会变得功能臃肿，耗费性能。</li>
+<li>代码可读性太差，一个大的几千行代码的组件。</li>
+<li>组件易于维护，修改。</li>
+<li>组件复用性。</li>
+</ul>
+<h4 id="2-react组件解耦"><a href="#2-react组件解耦" class="headerlink" title="2.react组件解耦"></a>2.react组件解耦</h4><ul>
+<li><p>方法1：拆分<code>render()</code>方法，将父组件分解为多个逻辑子组件</p>
+<ul>
+<li>使用<code>函数式组件(functional components)</code>以保证组件模板做到最小化</li>
+<li>通过用间接的<em>组件声明</em>来替代直接的<em>函数调用</em>，我们创造出更小的单元构成来给 React 使用，App里面的render()方法返回dom只会渲染到Header和Body一层，而不会去渲染这两个子元素下的细节，从而使组件更高效</li>
+<li>浅渲染能用来简单地把那些单元分离出去以便独立测试</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Header = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Body = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> </span>= <span class="keyword">extends</span> React.Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        <span class="comment">// Nice and explicit about which props are used</span></span><br><span class="line">        &lt;Header data=&#123;<span class="built_in">this</span>.props.header&#125;/&gt;</span><br><span class="line">        &lt;Body data=&#123;<span class="built_in">this</span>.props.content&#125;/&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2：将react元素作为props传入，以模板化组件</p>
+<blockquote>
+<p>一个组件如果需要多种变化或者配置，我们应该考虑用一个或多个开放的接口，把组件转化成简易的“模板”组件。这能使得专用的父组件只需要专注于配置就行了。</p>
+<p>举个栗子：一个评论组件可能拥有不同的行为和显示不同的元数据，这取决于你是否是作者，评论是否成功保存，或者你拥有哪些权限。我们在设计组件时与其将组件的结构（如何和在哪里呈现组件的内容）和处理所有可能变量的逻辑混合，不如考虑独立实现这两个问题。利用React的<code>props</code>传递元素的功能，而不仅仅是传递数据来创建一个灵活的模板组件。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模板组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentTemplate</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">    <span class="comment">// Declare slots as type node</span></span><br><span class="line">    metadata: PropTypes.node,</span><br><span class="line">    actions: PropTypes.node,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;CommentHeading&gt;</span><br><span class="line">          &lt;Avatar user=&#123;...&#125;/&gt;</span><br><span class="line">          <span class="comment">// Slot for metadata</span></span><br><span class="line">          &lt;span&gt;&#123;<span class="built_in">this</span>.props.metadata&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/CommentHeading&gt;</span><br><span class="line">        &lt;CommentBody/&gt;</span><br><span class="line">        &lt;CommentFooter&gt;</span><br><span class="line">          &lt;Timestamp time=&#123;...&#125;/&gt;</span><br><span class="line">          <span class="comment">// Slot for actions</span></span><br><span class="line">          &lt;span&gt;&#123;<span class="built_in">this</span>.props.actions&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/CommentFooter&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 JSX 里，任何处在组件开关标签之间的东西都会被当作特殊的 <code>children</code>属性(props) 传递,当能正确使用这种特性的时候，它会大大丰富代码的表达能力。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 逻辑组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> metadata = <span class="built_in">this</span>.props.publishTime ?</span><br><span class="line">      &lt;PublishTime time=&#123;<span class="built_in">this</span>.props.publishTime&#125; /&gt; :</span><br><span class="line">      &lt;span&gt;Saving...&lt;/span&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> actions = [];</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.props.isSignedIn) &#123;</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">LikeAction</span> /&gt;</span></span>);</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">ReplyAction</span> /&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.props.isAuthor) &#123;</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">DeleteAction</span> /&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">CommentTemplate</span> <span class="attr">metadata</span>=<span class="string">&#123;metadata&#125;</span> <span class="attr">actions</span>=<span class="string">&#123;actions&#125;</span> /&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>逻辑可以单独负责计算出填充<code>元数据</code>和<code>行为</code>接口的内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;CommentTemplate metadata=&#123;metadata&#125; actions=&#123;actions&#125;&gt;</span><br><span class="line">  &#123;text&#125;</span><br><span class="line">&lt;/CommentTemplate&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;/CommentTemplate&gt;</code>组件中间只放适合它本身的元素，将其他需要逻辑判断的组价通过props传下去</li>
+</ul>
+</li>
+<li><p>方法3：巧用HOC，将公共内容提取到高阶组件中</p>
+<blockquote>
+<p>组件经常会被与其主要目的不直接相关的交叉问题污染。比如我们想在<code>Document</code>组件中的任意超链接触发时发送分析数据，再假设，发送的数据需要包含<code>Document</code>组件的一些信息，如它的ID。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最方便的方法是在文档组件的生命周期方法componentDidMount和componentWillUnmount中添加代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    ReactDOM.findDOMNode(<span class="built_in">this</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    ReactDOM.findDOMNode(<span class="built_in">this</span>).removeEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (e.target.tagName === <span class="string">&#x27;A&#x27;</span>) &#123; <span class="comment">// Naive check for &lt;a&gt; elements</span></span><br><span class="line">      sendAnalytics(<span class="string">&#x27;link clicked&#x27;</span>, &#123;</span><br><span class="line">        documentId: <span class="built_in">this</span>.props.documentId <span class="comment">// Specific information to be sent</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样有几点不好的地方：</p>
+<ul>
+<li>渲染文档是组件的主要目标，这样做的话很容易引起不必要的麻烦</li>
+<li>组件的生命周期里面还有其他逻辑代码，或造成混乱，更难理解</li>
+<li>分析代码不可复用</li>
+<li>重构困难</li>
+</ul>
+<p>解耦像这个例子这样的_方面_可以通过使用高阶组件来完成。简而言之，这些是可以被任意 React 组件使用的功能，把这些组件用一个想要的行为包装起来。</p>
+<p>先创建一个高阶组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLinkAnalytics</span>(<span class="params">mapPropsToData, WrappedComponent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">LinkAnalyticsWrapper</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ReactDOM.findDOMNode(<span class="built_in">this</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ReactDOM.findDOMNode(<span class="built_in">this</span>).removeEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    onClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (e.target.tagName === <span class="string">&#x27;A&#x27;</span>) &#123; <span class="comment">// Naive check for &lt;a&gt; elements</span></span><br><span class="line">        <span class="keyword">const</span> data = mapPropsToData ? mapPropsToData(<span class="built_in">this</span>.props) : &#123;&#125;;</span><br><span class="line">        sendAnalytics(<span class="string">&#x27;link clicked&#x27;</span>, data);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="comment">// Simply render the WrappedComponent with all props</span></span><br><span class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> &#123;<span class="attr">...this.props</span>&#125; /&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> LinkAnalyticsWrapper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意以下很重要：该高阶函数不会改变组件以添自己的行为，但是他会返回一个新的包裹组件。高阶组件就是一个新的包裹组件来替代原有的<code>Document</code>组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> withLinkAnalytics(<span class="function">(<span class="params">props</span>) =&gt;</span> (&#123;</span><br><span class="line">  documentId: props.documentId</span><br><span class="line">&#125;), Document);</span><br></pre></td></tr></table></figure>
+
+<p>请注意一个特殊的细节，发送什么样的数据（<code>documentId</code>）可以被<strong>HOC</strong>提取为配置。该数据使文件的作用域信息，<code>Document</code>组件和<strong>HOC</strong>中<code>withLinkAnalytics</code>点击事件的通用功能保持一致。</p>
+<p>在这个组件里</p>
+<p>高阶组件展现了React组件的强大的组件化特性。这个简单的例子展示了如何将看起来紧耦合的代码如何被解耦成拥有单一功能的模块。</p>
+</li>
+</ul>
+<h4 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h4><ul>
+<li>react组件是可以通过设计变得高度组合的，我们可以通过组件设计来实现的一些复杂的功能。</li>
+<li>组件解耦让我们的组件逻辑更清晰，代码更健壮，复用性更强。</li>
+<li>养成良好的编程思想对我们帮助巨大不要因为一开始比较笨拙就不去用或者很少用，坚持下去我们的代码                水平会更加进步。</li>
+</ul>
+
+    </div>
+
+    
+</div>
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>-<a class="flink" target="_blank" rel="noopener" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="CmCti21ooOOIzFOhEyFkFvR0-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="FqiyUqbg7McKN2eG0MCewupf">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
+</body>
+
+</html>
