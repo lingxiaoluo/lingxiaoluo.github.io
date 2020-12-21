@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>使用hexo和github搭建个人博客</title>
+    <url>/2010/12/17/hexo/</url>
+    <content><![CDATA[<p><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<a id="more"></a>
+
+
+<h3 id="使用hexo和github搭建个人博客"><a href="#使用hexo和github搭建个人博客" class="headerlink" title="使用hexo和github搭建个人博客"></a>使用hexo和github搭建个人博客</h3><h5 id="1-什么是hexo"><a href="#1-什么是hexo" class="headerlink" title="1.什么是hexo"></a>1.什么是hexo</h5><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9xpm41wj30mm0djglt.jpg" alt="hexo架构图"><br><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<h5 id="2-hexo好处都有啥，谁说对了就给他"><a href="#2-hexo好处都有啥，谁说对了就给他" class="headerlink" title="2.hexo好处都有啥，谁说对了就给他"></a>2.hexo好处都有啥，谁说对了就给他</h5><ul>
+<li>快速、简洁、强大。 hexo静态博客框架，相比于WordPress，静态页面渲染速度快。上手简单快捷。</li>
+<li> 使用markdown语法。markdown语法写起来舒服，看起来更舒服。</li>
+<li> 基于node.js来渲染页面，插件系统很强大，中文支持度高。</li>
+<li>github作为全球最大的程序员同性交友网站，平台好。其实最主要还是免费。也可以自己买vps去搭建。传送门<ul>
+<li> vps服务商，推荐<a href="https://bwh1.net/">搬瓦工</a>和<a href="https://www.vultr.com/">vultr</a>，如果不嫌备案麻烦的话，也可以使用腾讯云阿里云的学生机。</li>
+<li> 域名注册，推荐<a href="https://sg.godaddy.com/zh/">狗爹</a>。也可以使用万网注册。</li>
+<li> 使用WordPress搭建博客：<a href="https://www.seoimo.com/wordpress-vps/#setup-lamp">相关教程推荐传送门</a></li>
+</ul>
+</li>
+</ul>
+<h5 id="3-准备工作"><a href="#3-准备工作" class="headerlink" title="3.准备工作"></a>3.准备工作</h5><ul>
+<li>github账号</li>
+<li>本地安装node和git</li>
+<li>如果有自己的域名的话，请先准备好解析（本条可有可无）</li>
+</ul>
+<h5 id="4-基本思路"><a href="#4-基本思路" class="headerlink" title="4.基本思路"></a>4.基本思路</h5><ul>
+<li>本地将 *.md 渲染成静态文件</li>
+<li>然后Git推送到服务器的repository</li>
+<li>服务器再通过 git-hooks 同步网站根目录。</li>
+</ul>
+<h5 id="5-远程git仓库配置"><a href="#5-远程git仓库配置" class="headerlink" title="5.远程git仓库配置"></a>5.远程git仓库配置</h5><ul>
+<li><p>登录你的GitHub，点击New Repository，如图所示：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9yauswsj30e305ka9y.jpg" alt="新建仓库"></p>
+</li>
+<li><p>设置仓库地址,因为我们是使用 Github Pages 去搭建我们的静态博客，所以版本库的名称请务必设置为：<code>用户名</code> + <code>.github.io</code>。即将访问的页面就是<code>https://lingxiaoluo.github.io </code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9ywc39lj30iz06v0st.jpg" alt="仓库名设置">  </p>
+</li>
+<li><p>设置完成，这是完成之后的地址<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9zeesnzj30mr06g0st.jpg" alt="dizhi"></p>
+</li>
+</ul>
+<h5 id="6-本地的配置"><a href="#6-本地的配置" class="headerlink" title="6.本地的配置"></a>6.本地的配置</h5><h6 id="6-1-安装git和node客户端"><a href="#6-1-安装git和node客户端" class="headerlink" title="6.1.安装git和node客户端"></a>6.1.安装git和node客户端</h6><h6 id="6-2-配置SSH。"><a href="#6-2-配置SSH。" class="headerlink" title="6.2. 配置SSH。"></a>6.2. 配置SSH。</h6><ul>
+<li>打开 Git Bash（win下以管理员身份运行） ，执行下面的命令生成 SSH 访问私钥及公钥。在这里可能会出现GitHub账号与gitlab账号冲突的地方。具体修改可以参考这篇文章：<a href="https://segmentfault.com/a/1190000002994742">gitlab/github 多账户下设置 ssh keys</a></li>
+<li> 先生成gitlab的秘钥，一路默认即可，输入密码时密码是你的gitlab密码： <code>$ ssh-keygen -t rsa -C &quot;公司邮箱&quot;</code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva06z7mfj30g80ait8t.jpg" alt="生成秘钥"></li>
+<li> 查看 .ssh目录下已经生成了两个文件：<code>id_rsa</code>和<code>id_rsa_pub</code>， 查看公钥内容：<code>cat ~/.ssh/id_rsa.pub</code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva0qwtgnj30ft049mx9.jpg" alt="公钥内容"></li>
+<li> 将公钥内容复制，打开gitlab页面中的SSH_KEYS，添加进去，<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva1bilf0j30oo0dwq38.jpg" alt="添加公钥"></li>
+<li> 生成GitHub的秘钥，执行命令：<code> ssh-keygen -t rsa -C &quot;注册GitHub的邮箱&quot; -f ~/.ssh/id_rsa_github</code>，会生成指定名称为：<code>id_rsa_github</code>和<code>id_rsa_github.pub</code>两个秘钥文件。如图：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva201vjrj30g50b3glr.jpg" alt="github秘钥"></li>
+<li> 参考配置gitlab的操作。打开这个id_rsa_github_pub文件，复制里面的内容，进入GitHub页面，找到Github -&gt; setting -&gt; SSH Keys，title随意，把复制内容填入就ok了。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva2escmhj30t00d93yl.jpg" alt="github秘钥"></li>
+<li> 配置config文件，通过设置别名，可以设置任意多的账户。<code>vim ~/.ssh/config</code>,进行如下配置：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva3p9cblj30gg0b4mx6.jpg" alt="config"></li>
+<li> 检测是否成功：<code>ssh -T git@github.com</code>，结果如图所示：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva436mpoj30fy03ndfo.jpg" alt="测试链接"></li>
+</ul>
+<h6 id="6-3-安装hexo框架"><a href="#6-3-安装hexo框架" class="headerlink" title="6.3 安装hexo框架"></a>6.3 安装hexo框架</h6><ul>
+<li> 桌面新建一个blog文件夹，进入blog，执行：<code>npm install -g hexo-cli</code>。 <img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva4j43xsj30fq04i0sj.jpg" alt="安装操作"></li>
+<li> 安装完成之后，执行初始化操作<code>hexo init &lt;文件夹名称&gt;</code>。</li>
+<li> 进入初始化后的文件夹，执行<code>npm install</code>。</li>
+<li>安装完成之后的文件夹目录：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva5ll8kjj30fv02h3yc.jpg" alt="目录"><ul>
+<li>_config.yml 文件是网站的配置文件，可以在其中配置网站的大部分参数。</li>
+<li>package.json 文件是应用程序的信息。</li>
+<li>source 是资源文件夹，是用来存放用户资源的地方。</li>
+<li>themes 是主题文件夹，Hexo会根据主题来生成不同的静态页面。</li>
+<li>scaffolds是模板件夹，当新建文章的时候，Hexo会根据模板来建立文件</li>
+</ul>
+</li>
+<li>执行<code>hexo g</code>编译，再执行 <code>hexo s</code>，在本地打开<code>localhost:4000</code>,进行预览：<ul>
+<li><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva69dn5sj30v50g30uw.jpg" alt="yulan"></li>
+</ul>
+</li>
+<li>hexo命令：<ul>
+<li><code>hexo clean</code></li>
+<li><code>hexo g</code></li>
+<li><code>hexo s</code></li>
+<li><code>hexo n</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="7-部署到Github-Pages"><a href="#7-部署到Github-Pages" class="headerlink" title="7.部署到Github Pages"></a>7.部署到Github Pages</h5><ul>
+<li>打开主目录的config.yml，设置其中的deploy 参数，详细请查看<a href="https://hexo.io/zh-cn/docs/deployment.html">Hexo官方文档中</a>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva7h2c7yj30fj04c0sj.jpg" alt="url"></li>
+<li>执行安装<code>npm install hexo-deployer-git --save</code>插件，只有安装了这个插件，才能部署到github上。</li>
+<li>开始写一篇文章部署到远程仓库：<ul>
+<li> <code>hexo new myHexo</code>，会在<code>source\_posts\</code>目录下生成一个<code>myHexo.md.md</code>文件。<img src="http://p4whgz4tw.bkt.clouddn.com/vim-hexo.png" alt="xiezuo"></li>
+<li> 执行<code>hexo g</code> 将markdown文件生成静态html文件</li>
+<li> 执行<code>hexo s</code> 在本地预览 </li>
+<li> 执行 <code>hexo d</code>部署到网站</li>
+</ul>
+</li>
+</ul>
+<h5 id="8-完成博客搭建"><a href="#8-完成博客搭建" class="headerlink" title="8.完成博客搭建"></a>8.完成博客搭建</h5><blockquote>
+<p>直接访问我们最初配置的github仓库地址就可以访问了：<a href="https://lingxiaoluo.github.io/">https://lingxiaoluo.github.io/</a></p>
+</blockquote>
+<p>博客配套措施：</p>
+<ul>
+<li>图床： 推荐使用七牛云或者新浪。七牛云只要通过实名认证即可获得10G的存储空间。</li>
+<li>安装主题：进入本地博客目录下的<code>/themes</code>文件夹底下，去hexo官网找到合适的皮肤，直接git clone 到该目录下，修改相应的配置文件，重新替换服务即可</li>
+<li>域名，购买好域名，设置好相应的dns解析，即可</li>
+<li>插件，可以再官方文档中查看，主要添加的插件：评论插件</li>
+</ul>
+<p>参考文档：</p>
+<ul>
+<li><a href="https://hexo.io/zh-cn/docs/">hexo官网</a></li>
+<li><a href="https://www.jianshu.com/p/05289a4bc8b2">如何搭建一个独立博客——简明Github Pages与Hexo教程</a></li>
+<li><a href="https://www.jianshu.com/p/a39573555039">使用hexo+github免费搭建个人博客网站超详细教程</a></li>
+<li><a href="https://segmentfault.com/a/1190000002994742">gitlab/github 多账户下设置 ssh keys</a></li>
+</ul>
+<p>​    </p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react组件解耦</title>
+    <url>/2018/12/17/react%E7%BB%84%E4%BB%B6%E8%A7%A3%E8%80%A6/</url>
+    <content><![CDATA[<p>什么是解耦，为什么要解耦</p>
+<a id="more"></a>
+
+<h3 id="1-什么是解耦，为什么要解耦"><a href="#1-什么是解耦，为什么要解耦" class="headerlink" title="1.什么是解耦，为什么要解耦"></a>1.什么是解耦，为什么要解耦</h3><p><a href="https://www.zhihu.com/question/20278169">https://www.zhihu.com/question/20278169</a></p>
+<ul>
+<li>组件会随着时间推移而不断扩展，承担太多的任务，组件逻辑严重耦合。</li>
+<li>组件太大会变得功能臃肿，耗费性能。</li>
+<li>代码可读性太差，一个大的几千行代码的组件。</li>
+<li>组件易于维护，修改。</li>
+<li>组件复用性。</li>
+</ul>
+<h3 id="2-react组件解耦"><a href="#2-react组件解耦" class="headerlink" title="2.react组件解耦"></a>2.react组件解耦</h3><ul>
+<li><p>方法1：拆分<code>render()</code>方法，将父组件分解为多个逻辑子组件</p>
+<ul>
+<li>使用<code>函数式组件(functional components)</code>以保证组件模板做到最小化</li>
+<li>通过用间接的<em>组件声明</em>来替代直接的<em>函数调用</em>，我们创造出更小的单元构成来给 React 使用，App里面的render()方法返回dom只会渲染到Header和Body一层，而不会去渲染这两个子元素下的细节，从而使组件更高效</li>
+<li>浅渲染能用来简单地把那些单元分离出去以便独立测试</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Header = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Body = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> </span>= <span class="keyword">extends</span> React.Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        <span class="comment">// Nice and explicit about which props are used</span></span><br><span class="line">        &lt;Header data=&#123;<span class="built_in">this</span>.props.header&#125;/&gt;</span><br><span class="line">        &lt;Body data=&#123;<span class="built_in">this</span>.props.content&#125;/&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2：将react元素作为props传入，以模板化组件</p>
+<blockquote>
+<p>一个组件如果需要多种变化或者配置，我们应该考虑用一个或多个开放的接口，把组件转化成简易的“模板”组件。这能使得专用的父组件只需要专注于配置就行了。</p>
+<p>举个栗子：一个评论组件可能拥有不同的行为和显示不同的元数据，这取决于你是否是作者，评论是否成功保存，或者你拥有哪些权限。我们在设计组件时与其将组件的结构（如何和在哪里呈现组件的内容）和处理所有可能变量的逻辑混合，不如考虑独立实现这两个问题。利用React的<code>props</code>传递元素的功能，而不仅仅是传递数据来创建一个灵活的模板组件。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//模板组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentTemplate</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">    <span class="comment">// Declare slots as type node</span></span><br><span class="line">    metadata: PropTypes.node,</span><br><span class="line">    actions: PropTypes.node,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;CommentHeading&gt;</span><br><span class="line">          &lt;Avatar user=&#123;...&#125;/&gt;</span><br><span class="line">          <span class="comment">// Slot for metadata</span></span><br><span class="line">          &lt;span&gt;&#123;<span class="built_in">this</span>.props.metadata&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/CommentHeading&gt;</span><br><span class="line">        &lt;CommentBody/&gt;</span><br><span class="line">        &lt;CommentFooter&gt;</span><br><span class="line">          &lt;Timestamp time=&#123;...&#125;/&gt;</span><br><span class="line">          <span class="comment">// Slot for actions</span></span><br><span class="line">          &lt;span&gt;&#123;<span class="built_in">this</span>.props.actions&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/CommentFooter&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 JSX 里，任何处在组件开关标签之间的东西都会被当作特殊的 <code>children</code>属性(props) 传递,当能正确使用这种特性的时候，它会大大丰富代码的表达能力。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 逻辑组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> metadata = <span class="built_in">this</span>.props.publishTime ?</span><br><span class="line">      &lt;PublishTime time=&#123;<span class="built_in">this</span>.props.publishTime&#125; /&gt; :</span><br><span class="line">      &lt;span&gt;Saving...&lt;/span&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> actions = [];</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.props.isSignedIn) &#123;</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">LikeAction</span> /&gt;</span></span>);</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">ReplyAction</span> /&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.props.isAuthor) &#123;</span><br><span class="line">      actions.push(<span class="xml"><span class="tag">&lt;<span class="name">DeleteAction</span> /&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">CommentTemplate</span> <span class="attr">metadata</span>=<span class="string">&#123;metadata&#125;</span> <span class="attr">actions</span>=<span class="string">&#123;actions&#125;</span> /&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>逻辑可以单独负责计算出填充<code>元数据</code>和<code>行为</code>接口的内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;CommentTemplate metadata=&#123;metadata&#125; actions=&#123;actions&#125;&gt;</span><br><span class="line">  &#123;text&#125;</span><br><span class="line">&lt;/CommentTemplate&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;/CommentTemplate&gt;</code>组件中间只放适合它本身的元素，将其他需要逻辑判断的组价通过props传下去</li>
+</ul>
+</li>
+<li><p>方法3：巧用HOC，将公共内容提取到高阶组件中</p>
+<blockquote>
+<p>组件经常会被与其主要目的不直接相关的交叉问题污染。比如我们想在<code>Document</code>组件中的任意超链接触发时发送分析数据，再假设，发送的数据需要包含<code>Document</code>组件的一些信息，如它的ID。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 最方便的方法是在文档组件的生命周期方法componentDidMount和componentWillUnmount中添加代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    ReactDOM.findDOMNode(<span class="built_in">this</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    ReactDOM.findDOMNode(<span class="built_in">this</span>).removeEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (e.target.tagName === <span class="string">&#x27;A&#x27;</span>) &#123; <span class="comment">// Naive check for &lt;a&gt; elements</span></span><br><span class="line">      sendAnalytics(<span class="string">&#x27;link clicked&#x27;</span>, &#123;</span><br><span class="line">        documentId: <span class="built_in">this</span>.props.documentId <span class="comment">// Specific information to be sent</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样有几点不好的地方：</p>
+<ul>
+<li>渲染文档是组件的主要目标，这样做的话很容易引起不必要的麻烦</li>
+<li>组件的生命周期里面还有其他逻辑代码，或造成混乱，更难理解</li>
+<li>分析代码不可复用</li>
+<li>重构困难</li>
+</ul>
+<p>解耦像这个例子这样的_方面_可以通过使用高阶组件来完成。简而言之，这些是可以被任意 React 组件使用的功能，把这些组件用一个想要的行为包装起来。</p>
+<p>先创建一个高阶组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLinkAnalytics</span>(<span class="params">mapPropsToData, WrappedComponent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">LinkAnalyticsWrapper</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ReactDOM.findDOMNode(<span class="built_in">this</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ReactDOM.findDOMNode(<span class="built_in">this</span>).removeEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="built_in">this</span>.onClick);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    onClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (e.target.tagName === <span class="string">&#x27;A&#x27;</span>) &#123; <span class="comment">// Naive check for &lt;a&gt; elements</span></span><br><span class="line">        <span class="keyword">const</span> data = mapPropsToData ? mapPropsToData(<span class="built_in">this</span>.props) : &#123;&#125;;</span><br><span class="line">        sendAnalytics(<span class="string">&#x27;link clicked&#x27;</span>, data);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="comment">// Simply render the WrappedComponent with all props</span></span><br><span class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> &#123;<span class="attr">...this.props</span>&#125; /&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> LinkAnalyticsWrapper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意以下很重要：该高阶函数不会改变组件以添自己的行为，但是他会返回一个新的包裹组件。高阶组件就是一个新的包裹组件来替代原有的<code>Document</code>组件：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> withLinkAnalytics(<span class="function">(<span class="params">props</span>) =&gt;</span> (&#123;</span><br><span class="line">  documentId: props.documentId</span><br><span class="line">&#125;), Document);</span><br></pre></td></tr></table></figure>
+
+<p>请注意一个特殊的细节，发送什么样的数据（<code>documentId</code>）可以被<strong>HOC</strong>提取为配置。该数据使文件的作用域信息，<code>Document</code>组件和<strong>HOC</strong>中<code>withLinkAnalytics</code>点击事件的通用功能保持一致。</p>
+<p>在这个组件里</p>
+<p>高阶组件展现了React组件的强大的组件化特性。这个简单的例子展示了如何将看起来紧耦合的代码如何被解耦成拥有单一功能的模块。</p>
+</li>
+</ul>
+<h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h3><ul>
+<li>react组件是可以通过设计变得高度组合的，我们可以通过组件设计来实现的一些复杂的功能。</li>
+<li>组件解耦让我们的组件逻辑更清晰，代码更健壮，复用性更强。</li>
+<li>养成良好的编程思想对我们帮助巨大不要因为一开始比较笨拙就不去用或者很少用，坚持下去我们的代码                水平会更加进步。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+  </entry>
+</search>

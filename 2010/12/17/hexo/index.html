@@ -1,36 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        学习笔记
-    </title>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    使用hexo和github搭建个人博客 |
     
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
-
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
-
-    
+    学习笔记</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
 <link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
 
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            使用hexo和github搭建个人博客
-        </p>
-        <hr>
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-hexo" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  使用hexo和github搭建个人博客
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2010/12/17/hexo/" class="article-date">
+  <time datetime="2010-12-17T07:52:42.000Z" itemprop="datePublished">2010-12-17</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/hexo/">hexo</a>
+</div>
+
     </div>
-    <div class="post-content">
-        <h4 id="1-什么是hexo"><a href="#1-什么是hexo" class="headerlink" title="1.什么是hexo"></a>1.什么是hexo</h4><p><img src="http://p4whgz4tw.bkt.clouddn.com//flex/hexo-cli.png" alt="hexo架构图"><br><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
-<h4 id="2-hexo好处都有啥，谁说对了就给他"><a href="#2-hexo好处都有啥，谁说对了就给他" class="headerlink" title="2.hexo好处都有啥，谁说对了就给他"></a>2.hexo好处都有啥，谁说对了就给他</h4><ul>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <p><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<a id="more"></a>
+
+
+<h3 id="使用hexo和github搭建个人博客"><a href="#使用hexo和github搭建个人博客" class="headerlink" title="使用hexo和github搭建个人博客"></a>使用hexo和github搭建个人博客</h3><h5 id="1-什么是hexo"><a href="#1-什么是hexo" class="headerlink" title="1.什么是hexo"></a>1.什么是hexo</h5><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9xpm41wj30mm0djglt.jpg" alt="hexo架构图"><br><strong>Hexo</strong>是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<h5 id="2-hexo好处都有啥，谁说对了就给他"><a href="#2-hexo好处都有啥，谁说对了就给他" class="headerlink" title="2.hexo好处都有啥，谁说对了就给他"></a>2.hexo好处都有啥，谁说对了就给他</h5><ul>
 <li>快速、简洁、强大。 hexo静态博客框架，相比于WordPress，静态页面渲染速度快。上手简单快捷。</li>
 <li> 使用markdown语法。markdown语法写起来舒服，看起来更舒服。</li>
 <li> 基于node.js来渲染页面，插件系统很强大，中文支持度高。</li>
@@ -41,41 +86,39 @@
 </ul>
 </li>
 </ul>
-<h4 id="3-准备工作"><a href="#3-准备工作" class="headerlink" title="3.准备工作"></a>3.准备工作</h4><ul>
+<h5 id="3-准备工作"><a href="#3-准备工作" class="headerlink" title="3.准备工作"></a>3.准备工作</h5><ul>
 <li>github账号</li>
 <li>本地安装node和git</li>
 <li>如果有自己的域名的话，请先准备好解析（本条可有可无）</li>
 </ul>
-<h4 id="4-基本思路"><a href="#4-基本思路" class="headerlink" title="4.基本思路"></a>4.基本思路</h4><ul>
+<h5 id="4-基本思路"><a href="#4-基本思路" class="headerlink" title="4.基本思路"></a>4.基本思路</h5><ul>
 <li>本地将 *.md 渲染成静态文件</li>
 <li>然后Git推送到服务器的repository</li>
 <li>服务器再通过 git-hooks 同步网站根目录。</li>
 </ul>
-<h4 id="5-远程git仓库配置"><a href="#5-远程git仓库配置" class="headerlink" title="5.远程git仓库配置"></a>5.远程git仓库配置</h4><ul>
-<li>登录你的GitHub，点击New Repository，如图所示：<img src="http://p4whgz4tw.bkt.clouddn.com/%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93.png" alt="新建仓库"></li>
+<h5 id="5-远程git仓库配置"><a href="#5-远程git仓库配置" class="headerlink" title="5.远程git仓库配置"></a>5.远程git仓库配置</h5><ul>
+<li><p>登录你的GitHub，点击New Repository，如图所示：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9yauswsj30e305ka9y.jpg" alt="新建仓库"></p>
+</li>
+<li><p>设置仓库地址,因为我们是使用 Github Pages 去搭建我们的静态博客，所以版本库的名称请务必设置为：<code>用户名</code> + <code>.github.io</code>。即将访问的页面就是<code>https://lingxiaoluo.github.io </code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9ywc39lj30iz06v0st.jpg" alt="仓库名设置">  </p>
+</li>
+<li><p>设置完成，这是完成之后的地址<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glv9zeesnzj30mr06g0st.jpg" alt="dizhi"></p>
+</li>
 </ul>
-<br />
-* 设置仓库地址,因为我们是使用 Github Pages 去搭建我们的静态博客，所以版本库的名称请务必设置为：`用户名` + `.github.io`。即将访问的页面就是`https://lingxiaoluo.github.io `。![仓库名设置](http://p4whgz4tw.bkt.clouddn.com/仓库名.png)
-<br />  
-
-<ul>
-<li>设置完成，这是完成之后的地址<img src="http://p4whgz4tw.bkt.clouddn.com/dizhi.png" alt="dizhi"></li>
-</ul>
-<h4 id="6-本地的配置"><a href="#6-本地的配置" class="headerlink" title="6.本地的配置"></a>6.本地的配置</h4><h5 id="6-1-安装git和node客户端"><a href="#6-1-安装git和node客户端" class="headerlink" title="6.1.安装git和node客户端"></a>6.1.安装git和node客户端</h5><h5 id="6-2-配置SSH。"><a href="#6-2-配置SSH。" class="headerlink" title="6.2. 配置SSH。"></a>6.2. 配置SSH。</h5><ul>
+<h5 id="6-本地的配置"><a href="#6-本地的配置" class="headerlink" title="6.本地的配置"></a>6.本地的配置</h5><h6 id="6-1-安装git和node客户端"><a href="#6-1-安装git和node客户端" class="headerlink" title="6.1.安装git和node客户端"></a>6.1.安装git和node客户端</h6><h6 id="6-2-配置SSH。"><a href="#6-2-配置SSH。" class="headerlink" title="6.2. 配置SSH。"></a>6.2. 配置SSH。</h6><ul>
 <li>打开 Git Bash（win下以管理员身份运行） ，执行下面的命令生成 SSH 访问私钥及公钥。在这里可能会出现GitHub账号与gitlab账号冲突的地方。具体修改可以参考这篇文章：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002994742">gitlab/github 多账户下设置 ssh keys</a></li>
-<li> 先生成gitlab的秘钥，一路默认即可，输入密码时密码是你的gitlab密码： <code>$ ssh-keygen -t rsa -C &quot;公司邮箱&quot;</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/ssh-lab.png" alt="生成秘钥"></li>
-<li> 查看 .ssh目录下已经生成了两个文件：<code>id_rsa</code>和<code>id_rsa_pub</code>， 查看公钥内容：<code>cat ~/.ssh/id_rsa.pub</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/lab_pub.png" alt="公钥内容"></li>
-<li> 将公钥内容复制，打开gitlab页面中的SSH_KEYS，添加进去，<img src="http://p4whgz4tw.bkt.clouddn.com/add_lab_sshkey.png" alt="添加公钥"></li>
-<li> 生成GitHub的秘钥，执行命令：<code> ssh-keygen -t rsa -C &quot;注册GitHub的邮箱&quot; -f ~/.ssh/id_rsa_github</code>，会生成指定名称为：<code>id_rsa_github</code>和<code>id_rsa_github.pub</code>两个秘钥文件。如图：<img src="http://p4whgz4tw.bkt.clouddn.com/github_ssh.png" alt="github秘钥"></li>
-<li> 参考配置gitlab的操作。打开这个id_rsa_github_pub文件，复制里面的内容，进入GitHub页面，找到Github -&gt; setting -&gt; SSH Keys，title随意，把复制内容填入就ok了。<img src="http://p4whgz4tw.bkt.clouddn.com/github_ssh_2.png" alt="github秘钥"></li>
-<li> 配置config文件，通过设置别名，可以设置任意多的账户。<code>vim ~/.ssh/config</code>,进行如下配置：<img src="http://p4whgz4tw.bkt.clouddn.com/config.png" alt="config"></li>
-<li> 检测是否成功：<code>ssh -T git@github.com</code>，结果如图所示：<img src="http://p4whgz4tw.bkt.clouddn.com/github_success.png" alt="测试链接"></li>
+<li> 先生成gitlab的秘钥，一路默认即可，输入密码时密码是你的gitlab密码： <code>$ ssh-keygen -t rsa -C &quot;公司邮箱&quot;</code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva06z7mfj30g80ait8t.jpg" alt="生成秘钥"></li>
+<li> 查看 .ssh目录下已经生成了两个文件：<code>id_rsa</code>和<code>id_rsa_pub</code>， 查看公钥内容：<code>cat ~/.ssh/id_rsa.pub</code>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva0qwtgnj30ft049mx9.jpg" alt="公钥内容"></li>
+<li> 将公钥内容复制，打开gitlab页面中的SSH_KEYS，添加进去，<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva1bilf0j30oo0dwq38.jpg" alt="添加公钥"></li>
+<li> 生成GitHub的秘钥，执行命令：<code> ssh-keygen -t rsa -C &quot;注册GitHub的邮箱&quot; -f ~/.ssh/id_rsa_github</code>，会生成指定名称为：<code>id_rsa_github</code>和<code>id_rsa_github.pub</code>两个秘钥文件。如图：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva201vjrj30g50b3glr.jpg" alt="github秘钥"></li>
+<li> 参考配置gitlab的操作。打开这个id_rsa_github_pub文件，复制里面的内容，进入GitHub页面，找到Github -&gt; setting -&gt; SSH Keys，title随意，把复制内容填入就ok了。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva2escmhj30t00d93yl.jpg" alt="github秘钥"></li>
+<li> 配置config文件，通过设置别名，可以设置任意多的账户。<code>vim ~/.ssh/config</code>,进行如下配置：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva3p9cblj30gg0b4mx6.jpg" alt="config"></li>
+<li> 检测是否成功：<code>ssh -T git@github.com</code>，结果如图所示：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva436mpoj30fy03ndfo.jpg" alt="测试链接"></li>
 </ul>
-<h5 id="6-3-安装hexo框架"><a href="#6-3-安装hexo框架" class="headerlink" title="6.3 安装hexo框架"></a>6.3 安装hexo框架</h5><ul>
-<li> 桌面新建一个blog文件夹，进入blog，执行：<code>npm install -g hexo-cli</code>。 <img src="http://p4whgz4tw.bkt.clouddn.com/hexo-install.png" alt="安装操作"></li>
-<li> 安装完成之后，执行初始化操作<code>hexo init &lt;文件夹名称&gt;</code>。<img src="http://p4whgz4tw.bkt.clouddn.com/hexo-init.png" alt="init"></li>
-<li> 进入初始化后的文件夹，执行<code>npm install</code>，<img src="http://p4whgz4tw.bkt.clouddn.com/install_hexo.png" alt="install"></li>
-<li>安装完成之后的文件夹目录：<img src="http://p4whgz4tw.bkt.clouddn.com/%E7%9B%AE%E5%BD%951.png" alt="目录"><ul>
+<h6 id="6-3-安装hexo框架"><a href="#6-3-安装hexo框架" class="headerlink" title="6.3 安装hexo框架"></a>6.3 安装hexo框架</h6><ul>
+<li> 桌面新建一个blog文件夹，进入blog，执行：<code>npm install -g hexo-cli</code>。 <img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva4j43xsj30fq04i0sj.jpg" alt="安装操作"></li>
+<li> 安装完成之后，执行初始化操作<code>hexo init &lt;文件夹名称&gt;</code>。</li>
+<li> 进入初始化后的文件夹，执行<code>npm install</code>。</li>
+<li>安装完成之后的文件夹目录：<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva5ll8kjj30fv02h3yc.jpg" alt="目录"><ul>
 <li>_config.yml 文件是网站的配置文件，可以在其中配置网站的大部分参数。</li>
 <li>package.json 文件是应用程序的信息。</li>
 <li>source 是资源文件夹，是用来存放用户资源的地方。</li>
@@ -83,10 +126,8 @@
 <li>scaffolds是模板件夹，当新建文章的时候，Hexo会根据模板来建立文件</li>
 </ul>
 </li>
-<li>执行<code>hexo g</code>–&gt; <code>hexo s</code>，在本地打开<code>localhost:4000</code>,进行预览：<ul>
-<li><img src="http://p4whgz4tw.bkt.clouddn.com/hexo-g.png" alt="hexo-g"></li>
-<li><img src="http://p4whgz4tw.bkt.clouddn.com/hexo-s.png" alt="hexo-s"></li>
-<li><img src="http://p4whgz4tw.bkt.clouddn.com/blog4.png" alt="yulan"></li>
+<li>执行<code>hexo g</code>编译，再执行 <code>hexo s</code>，在本地打开<code>localhost:4000</code>,进行预览：<ul>
+<li><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva69dn5sj30v50g30uw.jpg" alt="yulan"></li>
 </ul>
 </li>
 <li>hexo命令：<ul>
@@ -97,20 +138,20 @@
 </ul>
 </li>
 </ul>
-<h4 id="7-部署到Github-Pages"><a href="#7-部署到Github-Pages" class="headerlink" title="7.部署到Github Pages"></a>7.部署到Github Pages</h4><ul>
-<li>打开主目录的config.yml，设置其中的deploy 参数，详细请查看<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/deployment.html">Hexo官方文档中</a>。<img src="http://p4whgz4tw.bkt.clouddn.com/hexo-git.png" alt="url"></li>
+<h5 id="7-部署到Github-Pages"><a href="#7-部署到Github-Pages" class="headerlink" title="7.部署到Github Pages"></a>7.部署到Github Pages</h5><ul>
+<li>打开主目录的config.yml，设置其中的deploy 参数，详细请查看<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/deployment.html">Hexo官方文档中</a>。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glva7h2c7yj30fj04c0sj.jpg" alt="url"></li>
 <li>执行安装<code>npm install hexo-deployer-git --save</code>插件，只有安装了这个插件，才能部署到github上。</li>
 <li>开始写一篇文章部署到远程仓库：<ul>
 <li> <code>hexo new myHexo</code>，会在<code>source\_posts\</code>目录下生成一个<code>myHexo.md.md</code>文件。<img src="http://p4whgz4tw.bkt.clouddn.com/vim-hexo.png" alt="xiezuo"></li>
 <li> 执行<code>hexo g</code> 将markdown文件生成静态html文件</li>
-<li> 执行<code>hexo s</code> 在本地预览 <img src="http://p4whgz4tw.bkt.clouddn.com/wenzhang1.png" alt="预览"></li>
-<li> 执行 <code>hexo d</code>部署到网站：<img src="http://p4whgz4tw.bkt.clouddn.com/final-hexo.png" alt="ok"></li>
+<li> 执行<code>hexo s</code> 在本地预览 </li>
+<li> 执行 <code>hexo d</code>部署到网站</li>
 </ul>
 </li>
 </ul>
-<h4 id="8-完成博客搭建"><a href="#8-完成博客搭建" class="headerlink" title="8.完成博客搭建"></a>8.完成博客搭建</h4><br />
-> 直接访问我们最初配置的github仓库地址就可以访问了：https://lingxiaoluo.github.io/
-
+<h5 id="8-完成博客搭建"><a href="#8-完成博客搭建" class="headerlink" title="8.完成博客搭建"></a>8.完成博客搭建</h5><blockquote>
+<p>直接访问我们最初配置的github仓库地址就可以访问了：<a target="_blank" rel="noopener" href="https://lingxiaoluo.github.io/">https://lingxiaoluo.github.io/</a></p>
+</blockquote>
 <p>博客配套措施：</p>
 <ul>
 <li>图床： 推荐使用七牛云或者新浪。七牛云只要通过实名认证即可获得10G的存储空间。</li>
@@ -125,61 +166,160 @@
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a39573555039">使用hexo+github免费搭建个人博客网站超详细教程</a></li>
 <li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002994742">gitlab/github 多账户下设置 ssh keys</a></li>
 </ul>
+<p>​    </p>
 
+      
     </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://example.com/2010/12/17/hexo/" data-id="ckixym98y0002u1afa25s9w57" class="article-share-link">
+        Share
+      </a>
+       -->
+    </footer>
 
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2018/12/17/react%E7%BB%84%E4%BB%B6%E8%A7%A3%E8%80%A6/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      react组件解耦
+      
+    </div>
+  </a>
+  
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
     
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="学习笔记"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">首页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
 </div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>-<a class="flink" target="_blank" rel="noopener" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
 </div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="CmCti21ooOOIzFOhEyFkFvR0-gzGzoHsz">
-<input type="hidden" id="valine_appKey" value="FqiyUqbg7McKN2eG0MCewupf">
+</div>
+    </aside>
+  </main>
+  <footer class="footer">
+  <div class="outer">
+    <!-- <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div> -->
+    <ul class="list-inline">
+      <li>学习笔记 &copy; 2020</li>
+      
+        <li></li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
 
-<script src="/libs/jquery.min.js"></script>
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
+<script src="/js/lazyload.min.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
 
-<script src="/js/js.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
-}
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
-}
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
 
-.v a {
-    color: #8696b1;
-}
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
 </body>
 
 </html>
